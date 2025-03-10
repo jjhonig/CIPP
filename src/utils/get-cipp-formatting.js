@@ -19,6 +19,7 @@ import { CippTimeAgo } from "../components/CippComponents/CippTimeAgo";
 import { getCippRoleTranslation } from "./get-cipp-role-translation";
 import { CogIcon, ServerIcon, UserIcon, UsersIcon } from "@heroicons/react/24/outline";
 import { getCippTranslation } from "./get-cipp-translation";
+import DOMPurify from "dompurify";
 import { getSignInErrorCodeTranslation } from "./get-cipp-signin-errorcode-translation";
 
 export const getCippFormatting = (data, cellName, type, canReceive) => {
@@ -219,6 +220,24 @@ export const getCippFormatting = (data, cellName, type, canReceive) => {
     }
   }
 
+  if (cellName === "PostExecution") {
+    const values = data ? data?.split(",").map((item) => item.trim()) : [];
+    if (values.length > 0) {
+      return isText
+        ? data
+        : values.map((value, index) => (
+            <Chip
+              key={index}
+              size="small"
+              variant="outlined"
+              label={value}
+              color="info"
+              sx={{ mr: 0.5 }}
+            />
+          ));
+    }
+  }
+
   if (cellName === "ClientId" || cellName === "role") {
     return isText ? data : <CippCopyToClipBoard text={data} type="chip" />;
   }
@@ -411,6 +430,20 @@ export const getCippFormatting = (data, cellName, type, canReceive) => {
       <Box component="span">
         <Chip variant="outlined" label="No data" size="small" color="info" />
       </Box>
+    );
+  }
+
+  // handle htmlDescription
+  if (cellName === "htmlDescription") {
+    return isText ? (
+      data
+    ) : (
+      <Box
+        component="span"
+        dangerouslySetInnerHTML={{
+          __html: DOMPurify.sanitize(data),
+        }}
+      />
     );
   }
 

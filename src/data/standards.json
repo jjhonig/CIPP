@@ -1113,7 +1113,14 @@
     "cat": "Exchange Standards",
     "tag": [],
     "helpText": "Enables litigation hold for all UserMailboxes with a valid license.",
-    "addedComponent": [],
+    "addedComponent": [
+      {
+        "type": "textField",
+        "name": "standards.EnableLitigationHold.days",
+        "required": false,
+        "label": "Days to apply for litigation hold"
+      }
+    ],
     "label": "Enable Litigation Hold for all users",
     "impact": "Low Impact",
     "impactColour": "info",
@@ -1691,6 +1698,14 @@
         "type": "switch",
         "label": "EnableOrganizationBranding",
         "name": "standards.SafeLinksPolicy.EnableOrganizationBranding"
+      },
+      {
+        "type": "autoComplete",
+        "multiple": true,
+        "creatable": true,
+        "required": false,
+        "name": "standards.SafeLinksPolicy.DoNotRewriteUrls",
+        "label": "Do not rewrite the following URLs in email"
       }
     ],
     "label": "Default SafeLinks Policy",
@@ -2344,6 +2359,14 @@
         "required": false,
         "name": "standards.SpamFilterPolicy.RegionBlockList",
         "label": "Regions to block (uppercase ISO 3166-1 two-letter)"
+      },
+      {
+        "type": "autoComplete",
+        "multiple": true,
+        "creatable": true,
+        "required": false,
+        "name": "standards.SpamFilterPolicy.AllowedSenderDomains",
+        "label": "Allowed sender domains"
       }
     ],
     "label": "Default Spam Filter Policy",
